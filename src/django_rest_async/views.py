@@ -142,12 +142,10 @@ async def api_doc_scheme(request):
             else:
                 content["responses"] = {"200": {"description": "Ok"}}
 
-            content["responses"]["401"] = {"description": "Not authenticated"}
             content["responses"]["403"] = {"description": "Forbidden"}
-            if getattr(url_pattern.callback, "login_required", False):
-                content["security"] = {
-                    "cookieAuth": [],
-                }
+            if getattr(url_pattern.callback, "has_authentication", False):
+                content["responses"]["401"] = {"description": "Not authenticated"}
+            content["tags"] = [url_pattern.name.replace("-", " ").replace("_", " ").capitalize()]
             for method in url_pattern.callback.methods:
                 methods[method.lower()] = content
 
@@ -155,18 +153,25 @@ async def api_doc_scheme(request):
 
     openapi = {
         "openapi": "3.0.3",
+        "info": "API doc",
         "paths": paths,
         "definitions": definitions,
         "components": {
             "securitySchemes": {
-                "cookieAuth": {
-                    "type": "apiKey",
-                    "in": "cookie",
-                    "name": "JSESSIONID",
+                "basicAuth": {
+                    "type": "http",
+                    "scheme": "basic",
+                },
+                "jwtAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "jwt",
+                },
+                "bearerAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
                 },
             },
         },
-        "security": {"cookieAuth": []},
     }
-    print(openapi)
     return JsonResponse(openapi)

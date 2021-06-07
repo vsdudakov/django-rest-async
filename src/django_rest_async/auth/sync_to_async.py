@@ -22,10 +22,7 @@ def logout(*args, **kwargs):
 
 
 @sync_to_async(thread_sensitive=True)
-def is_user_authenticated(request: HttpRequest) -> bool:
-    return request.user and request.user.is_authenticated
-
-
-@sync_to_async(thread_sensitive=True)
-def is_user_active(request: HttpRequest) -> bool:
-    return request.user and request.user.is_active
+def is_user_authenticated(request: HttpRequest) -> any:
+    user = request.user
+    if user.is_authenticated:
+        return user
