@@ -21,7 +21,9 @@ jobs:
         pip install pipenv
         pipenv sync --dev
     - name: Run Tests
-      run: pipenv run make test
+      run: |
+        pipenv run pip install .
+        pipenv run make test
   cd:
     name: Continuous delivery
     runs-on: ubuntu-latest
