@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 django = "*"
 pydantic = "*"
-uvicorn = "*"
 
 [dev-packages]
 ipdb = "*"
@@ -16,12 +15,10 @@ black = "==21.5b1"
 flake8-black = "*"
 isort = "*"
 interrogate = "*"
-django-coverage-plugin = "*"
 coverage = "*"
 factory-boy = "*"
 pytest = "*"
 pytest-cov = "*"
-pytest-django = "*"
 pytest-mock = "*"
 pytest-asyncio = "*"
 

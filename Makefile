@@ -12,7 +12,6 @@ lint:
 test:
 	flake8 --show-source src
 	isort --check-only src --diff
-	python manage.py makemigrations --dry-run --check
 	pytest --cov=src --cov-report=term --cov-report=html
 
 .PHONY: all

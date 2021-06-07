@@ -168,4 +168,5 @@ async def api_doc_scheme(request):
         },
         "security": {"cookieAuth": []},
     }
+    print(openapi)
     return JsonResponse(openapi)

@@ -47,3 +47,6 @@ coverage/
 # Sphinx Docs
 docs/_build
 docs/source/_code_reference
+
+# Build
+*.egg-info/
