@@ -1,12 +1,23 @@
+import os
+import re
+
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
+def get_version(package):
+    init_py = open(os.path.join(package, "__init__.py")).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
+version = get_version("django_rest_sync")
+
+
 setuptools.setup(
     name="django-rest-async",
-    version="0.0.1",
+    version=version,
     author="Vsevolod Dudakov",
     author_email="vsdudakov@gmail.com",
     description="Async Django REST framework",
