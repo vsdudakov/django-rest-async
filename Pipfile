@@ -21,6 +21,7 @@ pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 pytest-asyncio = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.9"
