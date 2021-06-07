@@ -151,7 +151,7 @@ class AsyncBaseQuerySet:
     @sync_to_async(thread_sensitive=True)
     def values(self, *args, **kwargs):
         qs = self._perform()
-        return qs.values(*args, **kwargs)
+        return [i for i in qs.values(*args, **kwargs)]
 
     @sync_to_async(thread_sensitive=True)
     def values_list(self, *args, **kwargs):
