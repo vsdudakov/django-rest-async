@@ -50,3 +50,5 @@ docs/source/_code_reference
 
 # Build
 *.egg-info/
+build/
+dist/
