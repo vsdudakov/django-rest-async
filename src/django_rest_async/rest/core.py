@@ -13,6 +13,7 @@ from django_rest_async.rest.exceptions import RestForbiddenError, RestNotFoundEr
 from django_rest_async.rest.helpers import enrich_body, pydantic_errors_to_rest_errors
 from django_rest_async.rest.response import Response
 from django_rest_async.rest.serializers import serialize_django_model
+from django_rest_async.settings import REST_ASYNC_META_FIELD
 
 
 def rest_view(methods: Sequence, response_cls=None):
@@ -24,7 +25,7 @@ def rest_view(methods: Sequence, response_cls=None):
         @wraps(fn)
         async def wrap(request: HttpRequest, *args, **kwargs):
             if request.method not in methods:
-                return response_cls({"meta": "Method not allowed"}, status=405)
+                return response_cls({REST_ASYNC_META_FIELD: "Method not allowed"}, status=405)
             try:
                 status_code, body = await fn(request, *args, **kwargs)
                 return response_cls(body or {}, status=status_code)
