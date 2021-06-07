@@ -1,6 +1,6 @@
 import pytest
 
-from .models import BasicModel
+from .models import BasicModel, ManyToManyModel, ManyToOneModel
 
 
 @pytest.mark.django_db(transaction=True)
@@ -187,3 +187,30 @@ async def test_db_all():
     objs = await BasicModel.async_objects.all().query()
 
     assert len(objs) == 1
+
+
+@pytest.mark.django_db(transaction=True)
+@pytest.mark.asyncio
+async def test_db_m2o():
+    model = await BasicModel.async_objects.create(field="test")
+    m2o_model = await ManyToOneModel.async_objects.create(field=model)
+
+    rel_model = await m2o_model.async_field
+
+    assert rel_model.pk == model.pk
+
+
+@pytest.mark.django_db(transaction=True)
+@pytest.mark.asyncio
+async def test_db_m2m():
+    model = await BasicModel.async_objects.create(field="test")
+    m2m_model = await ManyToManyModel.async_objects.create()
+
+    await m2m_model.async_field.add(model)
+    rel_models = await m2m_model.async_field.all().query()
+    assert len(rel_models) == 1
+    assert rel_models[0].pk == model.pk
+
+    await m2m_model.async_field.remove(model)
+    rel_models = await m2m_model.async_field.all().query()
+    assert len(rel_models) == 0
