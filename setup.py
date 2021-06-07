@@ -8,11 +8,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 
 def get_version(package):
-    init_py = open(os.path.join(package, "__init__.py")).read()
+    init_py = open(os.path.join("src", package, "__init__.py")).read()
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
 
-version = get_version("django_rest_sync")
+version = get_version("django_rest_async")
 
 
 setuptools.setup(
