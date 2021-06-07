@@ -10,7 +10,6 @@ lint:
 
 .PHONY: test
 test:
-	pip install -e .
 	flake8 --show-source src
 	isort --check-only src --diff
 	pytest --cov=src --cov-report=term --cov-report=html
@@ -27,3 +26,4 @@ fix:
 install:
 	pipenv install --dev --ignore-pipfile
 	pre-commit install
+	pip install -e .

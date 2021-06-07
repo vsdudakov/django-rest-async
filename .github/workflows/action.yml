@@ -19,7 +19,7 @@ jobs:
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
       run: |
         pip install pipenv
-        pipenv sync --dev
+        pipenv run make install
     - name: Run Tests
       run: pipenv run make test
   cd:
